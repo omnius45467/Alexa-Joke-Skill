@@ -1,12 +1,60 @@
-var alexa = require('alexa-app');
+var alexa = require('alexa-app'),
+	mongoose = require('mongoose'),
+
+	Schema = mongoose.Schema,
+	ObjectId = Schema.ObjectId,
+
+	getUrl = require('request');
+
 var app = new alexa.app();
+
+//establish connection to the database
+
+// mongoose.connection('mongodb://alexa:asdf@ds161225.mlab.com:61225/jokes6000');
+
+//database schema for jokes
+var JokeSchema = new Schema({
+	joke_id	  : Number,
+	title     : String,
+	selftext  : String
+});
+
+//provide a model
+var JokeModel = mongoose.model('jokes', JokeSchema);
+
+
+function getJoke(json){
+	getUrl(json, function (error, Response, data) {
+
+		if (!error && Response.statusCode == 200) {
+
+			var parsed = JSON.parse(data).data.children,
+				l = parsed.length,
+				n = Math.floor(Math.random() * (l - 1)) + 1,
+				title = parsed[n].data.title,
+				selftext = parsed[n].data.selftext;
+			console.log(title);
+			return title;
+
+		} else {
+			console.log(error);//log the error
+		}
+	});
+}
+
 
 /**
  * LaunchRequest.
  */
 app.launch(function(request,response) {
-	response.say('Hey there fancy pants!');
-	response.card("Hey there fancy pants!","This is an example card");
+
+	response.say(getJoke('https://www.reddit.com/r/cleanjokes/.json'));
+
+	//check DB for the joke
+
+	//tell joke if it is not in the database
+
+	//saves joke that was spoken to the DB
 });
 
 
