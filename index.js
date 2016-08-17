@@ -45,33 +45,6 @@ app.launch(function (request, response) {
     return false;
 });
 
-
-/**
- * IntentRequest w/ asynchronous response.
- */
-app.intent('checkStatus',
-    {
-        'utterances': [
-            'status check', 'what is the status', 'tell me the status'
-        ]
-    },
-    function (request, response) {
-        setTimeout(function () {		// simulate an async request
-            response.session("test", "omnius");
-            // This is async and will run after a brief delay
-            response.say('Status is operational, mam!');
-
-            // Must call send to end the original request
-            response.send();
-
-        }, 250);
-
-        // Return false immediately so alexa-app doesn't send the response
-        return false;
-    }
-);
-
-
 /**
  * Error handler for any thrown errors.
  */
