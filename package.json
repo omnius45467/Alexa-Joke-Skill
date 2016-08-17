@@ -12,8 +12,11 @@
     "alexa-app": "latest",
     "config": "1.16.0",
     "joke-me": "^0.2.0",
+    "jokesearch": "^1.0.5",
     "mongoose": "^4.5.9",
-    "request": "^2.74.0"
+    "promise": "^7.1.1",
+    "request": "^2.74.0",
+    "request-promise": "^4.1.1"
   },
   "devDependencies": {
     "aws-sdk": "latest",
